@@ -6,6 +6,8 @@ ruby '2.6.2'
 gem 'rails', '~> 6.0.1'
 gem 'puma', '~> 4.1'
 
+gem 'httparty'
+
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development do
