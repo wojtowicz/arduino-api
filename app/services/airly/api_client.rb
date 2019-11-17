@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Airly
   class ApiClient
     API_KEY = Rails.application.credentials.fetch(:airly).fetch(:api_key)

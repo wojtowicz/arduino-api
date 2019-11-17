@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Pollution
   module Entities
     class Measurement
@@ -11,6 +13,7 @@ module Pollution
 
       def to_s
         return value if limit.blank?
+
         (value / limit * 100).round
       end
     end

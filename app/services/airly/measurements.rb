@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Airly
   class Measurements < ApiClient
     attr_reader :lat, :lng
@@ -10,7 +12,7 @@ module Airly
       'VERY_HIGH' => 3,
       'EXTREME' => 3,
       'AIRMAGEDDON' => 3
-    }
+    }.freeze
 
     def initialize(lat:, lng:)
       @lat = lat
@@ -46,8 +48,9 @@ module Airly
     end
 
     def build_level_entity
-      raw_level = raw_current_indexes.find{ |i| i['name'] == 'AIRLY_CAQI'  }
+      raw_level = raw_current_indexes.find { |i| i['name'] == 'AIRLY_CAQI' }
       return if raw_level.blank?
+
       Pollution::Entities::Measurement.new(
         name: raw_level['name'],
         value: LEVELS_MAP[raw_level['level']],
@@ -66,7 +69,8 @@ module Airly
     end
 
     def limit_for(measurement_name)
-      raw_current_standards.find{|s| s['pollutant'] == measurement_name }&.fetch('limit')
+      raw_current_standards.find { |s| s['pollutant'] == measurement_name }
+                          &.fetch('limit')
     end
 
     def filter_entities(entities)

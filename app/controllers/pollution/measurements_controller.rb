@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 module Pollution
   class MeasurementsController < ApplicationController
     def index
-      @presenter = Pollution::MeasurementsPresenter.new(lat: lat_param, lng: lng_param, fields: params[:fields])
+      @presenter = Pollution::MeasurementsPresenter.new(
+        lat: lat_param, lng: lng_param, fields: params[:fields]
+      )
     end
 
     private
