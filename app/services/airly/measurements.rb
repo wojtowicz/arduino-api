@@ -2,13 +2,25 @@ module Airly
   class Measurements < ApiClient
     attr_reader :lat, :lng
 
+    LEVELS_MAP = {
+      'VERY_LOW' => 1,
+      'LOW' => 1,
+      'MEDIUM' => 2,
+      'HIGH' => 3,
+      'VERY_HIGH' => 3,
+      'EXTREME' => 3,
+      'AIRMAGEDDON' => 3
+    }
+
     def initialize(lat:, lng:)
       @lat = lat
       @lng = lng
     end
 
     def entities
-      build_entities
+      @entities = [build_level_entity].compact
+      @entities.concat build_entities
+      @entities
     end
 
     private
@@ -27,6 +39,20 @@ module Airly
 
     def raw_current_standards
       @raw_current_standards ||= raw_current['standards']
+    end
+
+    def raw_current_indexes
+      @raw_current_indexes ||= raw_current['indexes']
+    end
+
+    def build_level_entity
+      raw_level = raw_current_indexes.find{ |i| i['name'] == 'AIRLY_CAQI'  }
+      return if raw_level.blank?
+      Pollution::Entities::Measurement.new(
+        name: raw_level['name'],
+        value: LEVELS_MAP[raw_level['level']],
+        limit: nil
+      )
     end
 
     def build_entities

@@ -6,10 +6,11 @@ module Pollution
       def initialize(name:, value:, limit:)
         @name = name
         @value = value
-        @limit = limit || 1
+        @limit = limit
       end
 
-      def percentage_value
+      def to_s
+        return value if limit.blank?
         (value / limit * 100).round
       end
     end

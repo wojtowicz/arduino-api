@@ -17,7 +17,7 @@ module Pollution
     end
 
     def to_text
-      measurement_entities.map{|m| m.percentage_value }.join('|')
+      measurement_entities.map{|m| m.to_s }.join('|')
     end
 
     private
