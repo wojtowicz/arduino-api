@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Airly::Measurements do
+RSpec.describe Pollution::Airly::Measurements do
   subject(:measurements) do
     described_class.new(lat: lat, lng: lng)
   end
@@ -13,7 +13,7 @@ RSpec.describe Airly::Measurements do
   before do
     stub_request(
       :get,
-      "#{Airly::ApiClient::API_URL}/v2/measurements/point"
+      "#{Pollution::Airly::ApiClient::API_URL}/v2/measurements/point"
     ).with(query: hash_including('lat' => lat, 'lng' => lng))
       .to_return(
         status: 200,
