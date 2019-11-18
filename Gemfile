@@ -12,6 +12,12 @@ gem 'httparty'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rubocop', require: false
+gem 'rubocop-rspec', require: false
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'webmock'
+end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

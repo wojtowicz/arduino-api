@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 AllCops:
   Exclude:
     - bin/**/*
@@ -5,4 +7,8 @@ AllCops:
     - node_modules/**/*
     - config/**/*
 Style/Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context']
+RSpec/ExampleLength:
   Enabled: false

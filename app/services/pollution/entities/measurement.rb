@@ -14,7 +14,7 @@ module Pollution
       def to_s
         return value if limit.blank?
 
-        (value / limit * 100).round
+        (value.to_f / limit * 100).round
       end
     end
   end
