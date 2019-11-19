@@ -73,12 +73,6 @@ module Pollution
         raw_current_standards.find { |s| s['pollutant'] == measurement_name }
                             &.fetch('limit')
       end
-
-      def filter_entities(entities)
-        entities.select do |entity|
-          AVAILABLE.include?(entity.name)
-        end
-      end
     end
   end
 end

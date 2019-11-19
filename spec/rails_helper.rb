@@ -15,9 +15,8 @@ if Rails.env.production?
 end
 require 'rspec/rails'
 require 'webmock/rspec'
-require './spec/support/helpers'
 
-# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.include Helpers

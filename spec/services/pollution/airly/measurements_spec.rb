@@ -11,14 +11,7 @@ RSpec.describe Pollution::Airly::Measurements do
   let(:lng) { '19.93658' }
 
   before do
-    stub_request(
-      :get,
-      "#{Pollution::Airly::ApiClient::API_URL}/v2/measurements/point"
-    ).with(query: hash_including('lat' => lat, 'lng' => lng))
-      .to_return(
-        status: 200,
-        body: fixture_json_data('airly_v2_measurements_point.json')
-      )
+    stub_pollution_airly_measurements_point
   end
 
   describe '#entities' do

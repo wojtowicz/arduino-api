@@ -10,10 +10,6 @@ module Pollution
       @fields = Array(fields).map(&:downcase)
     end
 
-    def measurement_entities_collection
-      Pollution::MeasurementsCollection.new(build_measurement_entities, @fields)
-    end
-
     def to_text
       measurement_entities_collection.sort_by_fields
                                      .filter_by_fields
@@ -22,6 +18,10 @@ module Pollution
     end
 
     private
+
+    def measurement_entities_collection
+      Pollution::MeasurementsCollection.new(build_measurement_entities, @fields)
+    end
 
     def build_measurement_entities
       @measurement_entities = Airly::Measurements.new(lat: lat, lng: lng)

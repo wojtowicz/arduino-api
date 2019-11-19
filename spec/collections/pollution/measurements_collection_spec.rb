@@ -24,6 +24,14 @@ RSpec.describe Pollution::MeasurementsCollection do
   let(:data) { [entity1, entity2, entity3] }
   let(:fields) { [] }
 
+  describe 'Wrong fields' do
+    let(:fields) { %w[entity2 wrong] }
+
+    it 'raises error' do
+      expect { collection }.to raise_error('Wrong fields')
+    end
+  end
+
   describe '#sort_by_fields' do
     subject { collection.sort_by_fields.to_a }
 
