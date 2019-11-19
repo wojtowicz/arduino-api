@@ -19,6 +19,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'brakeman', require: false
   gem 'rspec-rails'
   gem 'webmock'
 end
