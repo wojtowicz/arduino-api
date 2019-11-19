@@ -14,6 +14,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rspec', require: false
 
+group :test do
+  gem 'simplecov', require: false
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'webmock'

@@ -15,6 +15,8 @@
 
 
 /public/assets
+/coverage
+/public/coverage
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
