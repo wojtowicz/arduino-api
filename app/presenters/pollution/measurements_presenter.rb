@@ -2,12 +2,14 @@
 
 module Pollution
   class MeasurementsPresenter
-    attr_reader :lat, :lng, :fields
+    attr_reader :lat, :lng, :fields, :cached
+    private :lat, :lng, :fields, :cached
 
-    def initialize(lat:, lng:, fields:)
+    def initialize(lat:, lng:, fields:, cached: false)
       @lat = lat
       @lng = lng
       @fields = Array(fields).map(&:downcase)
+      @cached = cached
     end
 
     def to_text
@@ -23,9 +25,15 @@ module Pollution
       Pollution::MeasurementsCollection.new(build_measurement_entities, @fields)
     end
 
+    def measurement_strategy
+      return Airly::MeasurementsCached if cached
+
+      Airly::Measurements
+    end
+
     def build_measurement_entities
-      @measurement_entities = Airly::Measurements.new(lat: lat, lng: lng)
-                                                 .entities
+      @measurement_entities = measurement_strategy.new(lat: lat, lng: lng)
+                                                  .entities
     end
   end
 end

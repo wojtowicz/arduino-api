@@ -4,7 +4,7 @@ module Pollution
   class MeasurementsController < ApplicationController
     def index
       @presenter = Pollution::MeasurementsPresenter.new(
-        lat: lat_param, lng: lng_param, fields: params[:fields]
+        lat: lat_param, lng: lng_param, fields: params[:fields], cached: true
       )
       data = "DATA:#{@presenter.to_text}"
       response.headers['Content-Length'] = data.length

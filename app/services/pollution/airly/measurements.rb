@@ -4,6 +4,7 @@ module Pollution
   module Airly
     class Measurements < ApiClient
       attr_reader :lat, :lng
+      private :lat, :lng
 
       LEVELS_MAP = {
         'VERY_LOW' => 1,

@@ -3,6 +3,7 @@
 module Pollution
   class MeasurementsCollection
     attr_reader :data, :fields
+    private :data, :fields
 
     include Enumerable
 
