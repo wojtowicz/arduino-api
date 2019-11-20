@@ -19,7 +19,12 @@ RSpec.describe Pollution::MeasurementsController, type: :controller do
       get :index, params: params, format: :text
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to eq("DATA:1|12.73|75|71|1012.62|66.44|24.71\n")
+      expect(response.body).to eq('DATA:1|12.73|75|71|1012.62|66.44|24.71')
+      expect(response.headers).to eq(
+        'Content-Length' => 38,
+        'Content-Type' => 'text/plain',
+        'Cache-Control' => 'private'
+      )
     end
 
     context 'with fields param' do
@@ -31,7 +36,12 @@ RSpec.describe Pollution::MeasurementsController, type: :controller do
         get :index, params: params, format: :text
 
         expect(response).to have_http_status(:ok)
-        expect(response.body).to eq("DATA:1|75|71\n")
+        expect(response.body).to eq('DATA:1|75|71')
+        expect(response.headers).to eq(
+          'Content-Length' => 12,
+          'Content-Type' => 'text/plain',
+          'Cache-Control' => 'private'
+        )
       end
     end
   end

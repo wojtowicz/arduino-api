@@ -6,6 +6,9 @@ module Pollution
       @presenter = Pollution::MeasurementsPresenter.new(
         lat: lat_param, lng: lng_param, fields: params[:fields]
       )
+      data = "DATA:#{@presenter.to_text}"
+      response.headers['Content-Length'] = data.length
+      send_data(data, filename: 'measurements.txt')
     end
 
     private
