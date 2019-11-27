@@ -9,6 +9,9 @@ deploy:
   api_key:
     secure: oyEvk9sOKi4oI7ZZILhf1qyQ5zzFXdPnqWOraf+00rlVGJkgQFaXjbF7ZETjdXQ7RntJFpkFG1QYeqOHmL0sAmiIAc4KPS1Y7bh+seFyoVig0AJ8ZX5DMKABhu0MoeKfOnvsRJYT3pEVYJ3sIKo0K6gnMvjLd5CQQrbmIQrJ1Ba5DmuJ3sdyR3Z2uSdN8gucaVF6pEF14OLA6ZbyKUJ4mSrcEoI7qUi7orfLL/+q1cX62qQzeya1CI1yKxLZ5512eVr8/i0hoQWua4O8xQ+3IoJByrT/gfqYM+4MzWy5a24RtieS7kGpY4DygN+HGUivr4JcEQCHKf8AIn8XHjKE8Mq1jMRb6uwOGEg8xTq5fSP9wlXLhzIbqYmDvTnSneDEMfc+ul/+PiVOuYiussa3aAg8wiNhgKlrvy/3oaotcvaNYD7M82yFRTP0MsvoRgQzqTYMWcEqdW95xldotPeKFd3b5KDQxrun1mFMH4AiW6GcCQ2ZUJ4cmk4dmAg40OLqPJzisJ4mRhPS7hQvepBa2sZNBSSgcWciXlrdR9i88HCc3AWetAUt+grhX5BIjGdygpQtThEvin7aNv2biiTogI60KrKsW/k0S+3RGLxvqtYOXJWP+B32o6otfuVjLyw9tXZOLr5ZNnmFfxV5qgXm4L4zZG/TjA86dgbk1/aVjcM=
   app: tomash-arduino-api
+  run:
+    - "rake db:migrate"
+    - restart
 services:
   - postgresql
 before_script:
