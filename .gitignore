@@ -13,7 +13,6 @@
 !/log/.keep
 !/tmp/.keep
 
-
 /public/assets
 /coverage
 /public/coverage
@@ -21,3 +20,4 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/database.yml
