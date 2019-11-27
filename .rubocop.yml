@@ -7,6 +7,7 @@ AllCops:
     - config.ru
     - node_modules/**/*
     - config/**/*
+    - db/schema.rb
 Style/Documentation:
   Enabled: false
 Metrics/BlockLength:
