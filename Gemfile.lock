@@ -61,7 +61,6 @@ GEM
     attr_encrypted (3.1.0)
       encryptor (~> 3.0.0)
     backports (3.15.0)
-    bindex (0.8.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     brakeman (4.7.2)
@@ -138,6 +137,8 @@ GEM
       json
       websocket (~> 1.0)
     rack (2.0.8)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.2.1)
@@ -231,11 +232,6 @@ GEM
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
     unicode-display_width (1.6.0)
-    web-console (4.0.1)
-      actionview (>= 6.0.0)
-      activemodel (>= 6.0.0)
-      bindex (>= 0.4.0)
-      railties (>= 6.0.0)
     webmock (3.7.6)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -257,6 +253,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.3)
   pg
   puma (~> 4.3)
+  rack-cors
   rails (~> 6.0.2)
   rspec-rails
   rubocop
@@ -265,7 +262,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   travis
-  web-console (>= 3.3.0)
   webmock
 
 RUBY VERSION

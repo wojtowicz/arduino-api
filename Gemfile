@@ -9,6 +9,7 @@ gem 'pg'
 gem 'puma', '~> 4.3'
 gem 'rails', '~> 6.0.2'
 
+gem 'rack-cors'
 gem 'attr_encrypted', '~> 3.1.0'
 gem 'httparty'
 
@@ -31,5 +32,4 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'travis'
-  gem 'web-console', '>= 3.3.0'
 end
