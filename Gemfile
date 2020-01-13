@@ -11,6 +11,7 @@ gem 'rails', '~> 6.0.2'
 
 gem 'attr_encrypted', '~> 3.1.0'
 gem 'httparty'
+gem 'jbuilder'
 
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rubocop', require: false
