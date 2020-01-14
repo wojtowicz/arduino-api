@@ -18,10 +18,10 @@ RSpec.describe Pollution::MeasurementsPresenter do
   describe '#to_text' do
     subject { presenter.to_text }
 
-    it { is_expected.to eq('1|12.73|75|71|1012.62|66.44|24.71') }
+    it { is_expected.to eq('1|12.73|18.7|35.53|1012.62|66.44|24.71|75|71') }
 
     context 'with fields' do
-      let(:fields) { %w[airly_caqi pm25 pm10] }
+      let(:fields) { %w[airly_caqi pm25% pm10%] }
 
       it { is_expected.to eq('1|75|71') }
     end

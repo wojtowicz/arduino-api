@@ -11,7 +11,7 @@ AllCops:
 Style/Documentation:
   Enabled: false
 Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context']
+  ExcludedMethods: ['describe', 'context', 'it']
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleExpectations:

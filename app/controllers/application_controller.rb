@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  after_action :delete_headers
+  # protect_from_forgery with: :null_session
+  after_action :delete_headers, if: :format_text?
 
   private
+
+  def format_text?
+    request.format.text?
+  end
 
   def delete_headers
     response.headers.delete_if do |key|
