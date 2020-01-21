@@ -3,6 +3,7 @@
 class Device < ApplicationRecord
   validates :uuid, uniqueness: true,
                    presence: true
+  validates :name, presence: true
 
   attr_encrypted :airly_api_key,
                  key: Rails.application.credentials.fetch(:airly_key_base)

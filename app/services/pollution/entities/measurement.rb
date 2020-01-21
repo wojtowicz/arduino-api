@@ -11,8 +11,8 @@ module Pollution
         @limit = limit
       end
 
-      def to_s
-        return value if limit.blank?
+      def percentage
+        return nil if limit.blank?
 
         (value.to_f / limit * 100).round
       end

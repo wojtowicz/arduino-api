@@ -12,11 +12,13 @@ module Pollution
       @cached = cached
     end
 
-    def to_text
+    def measurements
       measurement_entities_collection.sort_by_fields
                                      .filter_by_fields
-                                     .map(&:to_s)
-                                     .join('|')
+    end
+
+    def to_text
+      measurements.map(&:value).join('|')
     end
 
     private

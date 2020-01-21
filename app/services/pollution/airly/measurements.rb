@@ -24,6 +24,7 @@ module Pollution
       def entities
         @entities = [build_level_entity].compact
         @entities.concat build_entities
+        @entities.concat build_percentage_entities
         @entities
       end
 
@@ -66,6 +67,16 @@ module Pollution
             name: value['name'],
             value: value['value'],
             limit: limit_for(value['name'])
+          )
+        end
+      end
+
+      def build_percentage_entities
+        @entities.select(&:percentage).map do |entity|
+          Pollution::Entities::Measurement.new(
+            name: entity.name + '%',
+            value: entity.percentage,
+            limit: nil
           )
         end
       end
