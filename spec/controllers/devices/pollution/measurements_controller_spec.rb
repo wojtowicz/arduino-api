@@ -2,24 +2,27 @@
 
 require 'rails_helper'
 
-RSpec.describe Pollution::MeasurementsController, type: :controller do
+RSpec.describe Devices::Pollution::MeasurementsController, type: :controller do
   render_views
 
   let(:lat) { '50.06143' }
   let(:lng) { '19.93658' }
+  let(:device) { create(:device) }
 
   before do
     stub_pollution_airly_measurements_point
   end
 
   describe 'GET index' do
-    let(:params) { { lat: lat, lng: lng } }
+    let(:params) { { device_uuid: device.uuid, lat: lat, lng: lng } }
 
     context 'when request format is text' do
       let(:request_format) { :text }
 
       it 'returns file with measurements' do
-        get :index, params: params, format: request_format
+        expect do
+          get :index, params: params, format: request_format
+        end.to change { device.reload.sync_at }.from(nil)
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(
@@ -37,11 +40,16 @@ RSpec.describe Pollution::MeasurementsController, type: :controller do
     context 'when request format is text and with fields param' do
       let(:request_format) { :text }
       let(:params) do
-        { lat: lat, lng: lng, fields: %w[airly_caqi pm25% pm10%] }
+        {
+          device_uuid: device.uuid, lat: lat, lng: lng,
+          fields: %w[airly_caqi pm25% pm10%]
+        }
       end
 
       it 'returns file with filtered and ordered measurements' do
-        get :index, params: params, format: request_format
+        expect do
+          get :index, params: params, format: request_format
+        end.to change { device.reload.sync_at }.from(nil)
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq('DATA:1|75|71')
@@ -58,7 +66,10 @@ RSpec.describe Pollution::MeasurementsController, type: :controller do
       let(:request_format) { :json }
 
       it 'returns measurements' do
-        get :index, params: params, format: request_format
+        expect do
+          get :index, params: params, format: request_format
+        end.to change { device.reload.sync_at }.from(nil)
+
         expect(response).to have_http_status(:ok)
         expect(response.body).to be_json_eql(
           {
@@ -80,11 +91,16 @@ RSpec.describe Pollution::MeasurementsController, type: :controller do
     context 'when request format is json and with fields param' do
       let(:request_format) { :json }
       let(:params) do
-        { lat: lat, lng: lng, fields: %w[airly_caqi pm25 pm10 pm25% pm10%] }
+        {
+          device_uuid: device.uuid, lat: lat, lng: lng,
+          fields: %w[airly_caqi pm25 pm10 pm25% pm10%]
+        }
       end
 
       it 'returns filtered and ordered measurements' do
-        get :index, params: params, format: request_format
+        expect do
+          get :index, params: params, format: request_format
+        end.to change { device.reload.sync_at }.from(nil)
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to be_json_eql(
