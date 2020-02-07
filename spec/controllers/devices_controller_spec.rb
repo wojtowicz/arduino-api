@@ -5,15 +5,18 @@ require 'rails_helper'
 RSpec.describe DevicesController, type: :controller do
   render_views
 
+  let(:thirty_seconds_ago) { 30.seconds.ago }
+  let(:two_minutes_ago) { 2.minutes.ago }
+
   describe 'GET index' do
     it 'returns devices' do
       create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
                       lng: '19.67')
       create(:device, name: 'Device 2', uuid: 'uuid2', lat: '51.7',
                       lng: '22.44',
-                      sync_at: DateTime.new(2012, 8, 29, 12, 34, 56))
+                      sync_at: two_minutes_ago)
       create(:device, name: 'Device 3', uuid: 'uuid3', lat: '52.5',
-                      lng: '34.78')
+                      lng: '34.78', sync_at: thirty_seconds_ago)
 
       get :index, format: :json
       expect(response).to have_http_status(:ok)
@@ -24,21 +27,24 @@ RSpec.describe DevicesController, type: :controller do
             uuid: 'uuid1',
             lat: '50.1',
             lng: '19.67',
-            sync_at: nil
+            sync_at: nil,
+            status: 'configuring'
           },
           {
             name: 'Device 2',
             uuid: 'uuid2',
             lat: '51.7',
             lng: '22.44',
-            sync_at: '2012-08-29T12:34:56.000Z'
+            sync_at: two_minutes_ago,
+            status: 'offline'
           },
           {
             name: 'Device 3',
             uuid: 'uuid3',
             lat: '52.5',
             lng: '34.78',
-            sync_at: nil
+            sync_at: thirty_seconds_ago,
+            status: 'online'
           }
         ].to_json
       )
@@ -60,7 +66,8 @@ RSpec.describe DevicesController, type: :controller do
           uuid: 'uuid1',
           lat: '50.1',
           lng: '19.67',
-          sync_at: nil
+          sync_at: nil,
+          status: 'configuring'
         }.to_json
       )
     end
@@ -84,7 +91,8 @@ RSpec.describe DevicesController, type: :controller do
           uuid: 'uuid1',
           lat: '1.1',
           lng: '2.2',
-          sync_at: nil
+          sync_at: nil,
+          status: 'configuring'
         }.to_json
       )
     end
@@ -104,7 +112,8 @@ RSpec.describe DevicesController, type: :controller do
           uuid: 'uuid10',
           lat: '1.1',
           lng: '2.2',
-          sync_at: nil
+          sync_at: nil,
+          status: 'configuring'
         }.to_json
       )
     end

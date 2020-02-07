@@ -7,4 +7,22 @@ class Device < ApplicationRecord
 
   attr_encrypted :airly_api_key,
                  key: Rails.application.credentials.fetch(:airly_key_base)
+
+  def status
+    return 'configuring' if sync_at.nil?
+
+    online? ? 'online' : 'offline'
+  end
+
+  private
+
+  def online?
+    synced_at_in_minutes < 1
+  end
+
+  def synced_at_in_minutes
+    return if sync_at.nil?
+
+    ((Time.zone.now - sync_at) / 1.minutes).to_i
+  end
 end
