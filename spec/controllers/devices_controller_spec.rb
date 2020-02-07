@@ -76,8 +76,10 @@ RSpec.describe DevicesController, type: :controller do
   describe 'PUT update' do
     it 'updates exist device' do
       device = create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
-                               lng: '19.67')
-      device_params = { name: 'My Device', lat: '1.1', lng: '2.2' }
+                               lng: '19.67', sync_at: 3.days.ago)
+      device_params = {
+        name: 'My Device', lat: '1.1', lng: '2.2', sync_at: nil
+      }
 
       expect do
         put :update, params: { uuid: device.uuid, device: device_params },
