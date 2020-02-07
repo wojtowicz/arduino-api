@@ -7,6 +7,7 @@ ruby '2.6.2'
 
 gem 'pg'
 gem 'puma', '~> 4.3'
+gem 'rack-cors'
 gem 'rails', '~> 6.0.2'
 
 gem 'attr_encrypted', '~> 3.1.0'
