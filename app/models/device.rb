@@ -14,6 +14,10 @@ class Device < ApplicationRecord
     online? ? 'online' : 'offline'
   end
 
+  def pollution_configured?
+    lat.present? && lng.present? && airly_api_key.present?
+  end
+
   private
 
   def online?

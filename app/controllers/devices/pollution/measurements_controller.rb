@@ -4,7 +4,8 @@ module Devices
   module Pollution
     class MeasurementsController < ApplicationController
       def index
-        device = Device.find_by!(uuid: params[:device_uuid])
+        authorize device, :measurements?
+
         device.touch(:sync_at)
 
         @presenter = build_presenter
@@ -17,9 +18,14 @@ module Devices
 
       private
 
+      def device
+        @device ||= Device.find_by!(uuid: params[:device_uuid])
+      end
+
       def build_presenter
         ::Pollution::MeasurementsPresenter.new(
-          lat: lat_param, lng: lng_param, fields: params[:fields], cached: true
+          lat: device.lat, lng: device.lng, fields: params[:fields],
+          cached: true
         )
       end
 
@@ -27,14 +33,6 @@ module Devices
         data = "DATA:#{@presenter.to_text}"
         response.headers['Content-Length'] = data.length
         send_data(data, filename: 'measurements.txt')
-      end
-
-      def lat_param
-        params.require(:lat)
-      end
-
-      def lng_param
-        params.require(:lng)
       end
     end
   end

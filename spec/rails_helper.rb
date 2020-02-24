@@ -18,6 +18,7 @@ end
 require 'rspec/rails'
 require 'webmock/rspec'
 require 'database_cleaner'
+require 'pundit/rspec'
 
 Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort
                                                      .each { |f| require f }
