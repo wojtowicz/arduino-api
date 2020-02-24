@@ -24,6 +24,8 @@ class DevicesController < ApplicationController
   private
 
   def device_params
-    params.require(:device).permit(:lat, :lng, :name, :sync_at, :airly_api_key)
+    params.require(:device).permit(
+      :lat, :lng, :name, :sync_at, :airly_api_key, :coords_label
+    )
   end
 end

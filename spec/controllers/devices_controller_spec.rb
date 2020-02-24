@@ -11,12 +11,14 @@ RSpec.describe DevicesController, type: :controller do
   describe 'GET index' do
     it 'returns devices' do
       create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
-                      lng: '19.67')
+                      lng: '19.67', coords_label: 'Address, Poland')
       create(:device, name: 'Device 2', uuid: 'uuid2', lat: '51.7',
-                      lng: '22.44',
-                      sync_at: two_minutes_ago)
+                      lng: '22.44', sync_at: two_minutes_ago,
+                      coords_label: 'Address 2, Poland')
       create(:device, name: 'Device 3', uuid: 'uuid3', lat: '52.5',
-                      lng: '34.78', sync_at: thirty_seconds_ago)
+                      lng: '34.78', sync_at: thirty_seconds_ago,
+                      coords_label: 'Address 3, Poland',
+                      airly_api_key: 'APIKEY')
 
       get :index, format: :json
       expect(response).to have_http_status(:ok)
@@ -28,6 +30,8 @@ RSpec.describe DevicesController, type: :controller do
             lat: '50.1',
             lng: '19.67',
             sync_at: nil,
+            coords_label: 'Address, Poland',
+            airly_api_key: nil,
             status: 'configuring'
           },
           {
@@ -36,6 +40,8 @@ RSpec.describe DevicesController, type: :controller do
             lat: '51.7',
             lng: '22.44',
             sync_at: two_minutes_ago,
+            coords_label: 'Address 2, Poland',
+            airly_api_key: nil,
             status: 'offline'
           },
           {
@@ -44,6 +50,8 @@ RSpec.describe DevicesController, type: :controller do
             lat: '52.5',
             lng: '34.78',
             sync_at: thirty_seconds_ago,
+            coords_label: 'Address 3, Poland',
+            airly_api_key: 'APIKEY',
             status: 'online'
           }
         ].to_json
@@ -54,7 +62,8 @@ RSpec.describe DevicesController, type: :controller do
   describe 'GET show' do
     let(:device) do
       create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
-                      lng: '19.67')
+                      lng: '19.67', coords_label: 'Address, Poland',
+                      airly_api_key: 'APIKEY')
     end
 
     it 'returns device' do
@@ -67,7 +76,9 @@ RSpec.describe DevicesController, type: :controller do
           lat: '50.1',
           lng: '19.67',
           sync_at: nil,
-          status: 'configuring'
+          status: 'configuring',
+          airly_api_key: 'APIKEY',
+          coords_label: 'Address, Poland'
         }.to_json
       )
     end
@@ -76,10 +87,9 @@ RSpec.describe DevicesController, type: :controller do
   describe 'PUT update' do
     it 'updates exist device' do
       device = create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
-                               lng: '19.67', sync_at: 3.days.ago)
-      device_params = {
-        name: 'My Device', lat: '1.1', lng: '2.2', sync_at: nil
-      }
+                               lng: '19.67', coords_label: 'Address, Poland',
+                               airly_api_key: 'APIKEY')
+      device_params = { name: 'My Device', lat: '1.1', lng: '2.2' }
 
       expect do
         put :update, params: { uuid: device.uuid, device: device_params },
@@ -94,13 +104,15 @@ RSpec.describe DevicesController, type: :controller do
           lat: '1.1',
           lng: '2.2',
           sync_at: nil,
+          airly_api_key: 'APIKEY',
+          coords_label: 'Address, Poland',
           status: 'configuring'
         }.to_json
       )
     end
 
     it 'creates new device' do
-      device_params = { name: 'My Device', lat: '1.1', lng: '2.2' }
+      device_params = { name: 'My Device' }
 
       expect do
         put :update, params: { uuid: 'uuid10', device: device_params },
@@ -112,16 +124,18 @@ RSpec.describe DevicesController, type: :controller do
         {
           name: 'My Device',
           uuid: 'uuid10',
-          lat: '1.1',
-          lng: '2.2',
+          lat: nil,
+          lng: nil,
           sync_at: nil,
+          airly_api_key: nil,
+          coords_label: nil,
           status: 'configuring'
         }.to_json
       )
     end
 
     it 'validates device' do
-      device_params = { name: '', lat: '1.1', lng: '2.2' }
+      device_params = { name: '' }
 
       expect do
         put :update, params: { uuid: 'uuid10', device: device_params },
@@ -131,7 +145,12 @@ RSpec.describe DevicesController, type: :controller do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.body).to be_json_eql(
         {
-          name: ["can't be blank"]
+          errors: {
+            name: [
+              error: 'blank',
+              message: "can't be blank"
+            ]
+          }
         }.to_json
       )
     end

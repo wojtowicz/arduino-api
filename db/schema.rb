@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_14_123242) do
+ActiveRecord::Schema.define(version: 2020_02_20_182648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2020_01_14_123242) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "name", null: false
     t.datetime "sync_at"
+    t.string "coords_label"
     t.index ["uuid"], name: "index_devices_on_uuid", unique: true
   end
 
