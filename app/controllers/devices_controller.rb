@@ -11,16 +11,8 @@ class DevicesController < ApplicationController
 
   def update
     @device = Device.find_or_initialize_by(uuid: params[:uuid])
-
-    respond_to do |format|
-      if @device.update(device_params)
-        format.json { render :show }
-      else
-        format.json do
-          render json: @device.errors, status: :unprocessable_entity
-        end
-      end
-    end
+    @device.update(device_params)
+    respond_with @device
   end
 
   def destroy
