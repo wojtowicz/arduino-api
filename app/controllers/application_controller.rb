@@ -3,11 +3,11 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include Pundit
   self.responder = ApiResponder
   respond_to :json
 
   skip_before_action :verify_authenticity_token
+  include Pundit
   after_action :delete_headers, if: :format_text?
 
   # TODO: Remove this line when add devise gem

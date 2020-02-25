@@ -21,7 +21,7 @@ class Device < ApplicationRecord
   private
 
   def online?
-    synced_at_in_minutes < 1
+    synced_at_in_minutes < 1 && wifi_ssid.present?
   end
 
   def synced_at_in_minutes
