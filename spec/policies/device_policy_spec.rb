@@ -8,17 +8,10 @@ RSpec.describe DevicePolicy, type: :policy do
   let(:user) { nil }
   let(:lat) { '34.554334' }
   let(:lng) { '67.64534' }
-  let(:airly_api_key) { 'APIKEY' }
-  let(:device) { Device.new(lat: lat, lng: lng, airly_api_key: airly_api_key) }
+  let(:device) { Device.new(lat: lat, lng: lng) }
 
   permissions :measurements? do
     it { is_expected.to permit(user, device) }
-
-    context 'when airly_api_key is missing' do
-      let(:airly_api_key) { nil }
-
-      it { is_expected.not_to permit(user, device) }
-    end
 
     context 'when lat is missing' do
       let(:lat) { nil }

@@ -11,7 +11,6 @@ gem 'rack-cors'
 gem 'rails', '~> 6.0.2'
 gem 'responders'
 
-gem 'attr_encrypted', '~> 3.1.0'
 gem 'httparty'
 gem 'jbuilder'
 gem 'pundit'

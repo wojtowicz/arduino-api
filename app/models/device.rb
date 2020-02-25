@@ -5,9 +5,6 @@ class Device < ApplicationRecord
                    presence: true
   validates :name, presence: true
 
-  attr_encrypted :airly_api_key,
-                 key: Rails.application.credentials.fetch(:airly_key_base)
-
   def status
     return 'configuring' if sync_at.nil?
 
@@ -15,7 +12,7 @@ class Device < ApplicationRecord
   end
 
   def pollution_configured?
-    lat.present? && lng.present? && airly_api_key.present?
+    lat.present? && lng.present?
   end
 
   private

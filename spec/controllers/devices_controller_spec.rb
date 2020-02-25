@@ -19,8 +19,7 @@ RSpec.describe DevicesController, type: :controller do
       create(:device, name: 'Device 3', uuid: 'uuid3', lat: '52.5',
                       lng: '34.78', sync_at: thirty_seconds_ago,
                       coords_label: 'Address 3, Poland',
-                      airly_api_key: 'APIKEY', wifi_ssid: 'SSID3',
-                      local_ip: '192.168.1.3')
+                      wifi_ssid: 'SSID3', local_ip: '192.168.1.3')
 
       get :index, format: :json
       expect(response).to have_http_status(:ok)
@@ -33,7 +32,6 @@ RSpec.describe DevicesController, type: :controller do
             lng: '19.67',
             sync_at: nil,
             coords_label: 'Address, Poland',
-            airly_api_key: nil,
             status: 'configuring',
             wifi_ssid: nil,
             local_ip: nil
@@ -45,7 +43,6 @@ RSpec.describe DevicesController, type: :controller do
             lng: '22.44',
             sync_at: two_minutes_ago,
             coords_label: 'Address 2, Poland',
-            airly_api_key: nil,
             status: 'offline',
             wifi_ssid: 'SSID2',
             local_ip: '192.168.1.2'
@@ -57,7 +54,6 @@ RSpec.describe DevicesController, type: :controller do
             lng: '34.78',
             sync_at: thirty_seconds_ago,
             coords_label: 'Address 3, Poland',
-            airly_api_key: 'APIKEY',
             status: 'online',
             wifi_ssid: 'SSID3',
             local_ip: '192.168.1.3'
@@ -70,8 +66,7 @@ RSpec.describe DevicesController, type: :controller do
   describe 'GET show' do
     let(:device) do
       create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
-                      lng: '19.67', coords_label: 'Address, Poland',
-                      airly_api_key: 'APIKEY')
+                      lng: '19.67', coords_label: 'Address, Poland')
     end
 
     it 'returns device' do
@@ -85,7 +80,6 @@ RSpec.describe DevicesController, type: :controller do
           lng: '19.67',
           sync_at: nil,
           status: 'configuring',
-          airly_api_key: 'APIKEY',
           coords_label: 'Address, Poland',
           wifi_ssid: nil,
           local_ip: nil
@@ -97,12 +91,10 @@ RSpec.describe DevicesController, type: :controller do
   describe 'PUT update' do
     it 'updates exist device' do
       device = create(:device, name: 'Device 1', uuid: 'uuid1', lat: '50.1',
-                               lng: '19.67', coords_label: 'Address, Poland',
-                               airly_api_key: 'APIKEY')
+                               lng: '19.67', coords_label: 'Address, Poland')
       device_params = {
         name: 'My Device', lat: '1.1', lng: '2.2', coords_label: 'New Address',
-        airly_api_key: 'NEWAPIKEY', wifi_ssid: 'NEW WIFI SSID',
-        local_ip: '192.168.1.1'
+        wifi_ssid: 'NEW WIFI SSID', local_ip: '192.168.1.1'
       }
 
       expect do
@@ -118,7 +110,6 @@ RSpec.describe DevicesController, type: :controller do
           lat: '1.1',
           lng: '2.2',
           sync_at: nil,
-          airly_api_key: 'NEWAPIKEY',
           coords_label: 'New Address',
           status: 'configuring',
           wifi_ssid: 'NEW WIFI SSID',
@@ -143,7 +134,6 @@ RSpec.describe DevicesController, type: :controller do
           lat: nil,
           lng: nil,
           sync_at: nil,
-          airly_api_key: nil,
           coords_label: nil,
           status: 'configuring',
           wifi_ssid: nil,

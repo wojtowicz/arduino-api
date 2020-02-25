@@ -7,9 +7,8 @@ RSpec.describe Devices::Pollution::MeasurementsController, type: :controller do
 
   let(:lat) { '50.06143' }
   let(:lng) { '19.93658' }
-  let(:airly_api_key) { 'APIKEY' }
   let(:device) do
-    create(:device, lat: lat, lng: lng, airly_api_key: airly_api_key)
+    create(:device, lat: lat, lng: lng)
   end
 
   before do
@@ -22,7 +21,7 @@ RSpec.describe Devices::Pollution::MeasurementsController, type: :controller do
     end
 
     context 'when device is not configured' do
-      let(:device) { create(:device, lat: lat, lng: lng, airly_api_key: nil) }
+      let(:lat) { nil }
 
       it 'returns error message' do
         expect do
