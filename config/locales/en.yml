@@ -30,4 +30,7 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+ pundit:
+    default: 'You cannot perform this action.'
+    device_policy:
+      measurements?: 'Device is not configured for pollution measurements'

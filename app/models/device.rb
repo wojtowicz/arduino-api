@@ -14,10 +14,14 @@ class Device < ApplicationRecord
     online? ? 'online' : 'offline'
   end
 
+  def pollution_configured?
+    lat.present? && lng.present? && airly_api_key.present?
+  end
+
   private
 
   def online?
-    synced_at_in_minutes < 1
+    synced_at_in_minutes < 1 && wifi_ssid.present?
   end
 
   def synced_at_in_minutes

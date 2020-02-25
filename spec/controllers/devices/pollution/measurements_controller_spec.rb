@@ -7,14 +7,40 @@ RSpec.describe Devices::Pollution::MeasurementsController, type: :controller do
 
   let(:lat) { '50.06143' }
   let(:lng) { '19.93658' }
-  let(:device) { create(:device) }
+  let(:airly_api_key) { 'APIKEY' }
+  let(:device) do
+    create(:device, lat: lat, lng: lng, airly_api_key: airly_api_key)
+  end
 
   before do
     stub_pollution_airly_measurements_point
   end
 
   describe 'GET index' do
-    let(:params) { { device_uuid: device.uuid, lat: lat, lng: lng } }
+    let(:params) do
+      { device_uuid: device.uuid }
+    end
+
+    context 'when device is not configured' do
+      let(:device) { create(:device, lat: lat, lng: lng, airly_api_key: nil) }
+
+      it 'returns error message' do
+        expect do
+          get :index, params: params, format: :json
+        end.not_to change { device.reload.sync_at }.from(nil)
+
+        expect(response).to have_http_status(:forbidden)
+
+        expect(response.body).to be_json_eql(
+          {
+            error: {
+              code: 'device_policy.measurements?',
+              message: 'Device is not configured for pollution measurements'
+            }
+          }.to_json
+        )
+      end
+    end
 
     context 'when request format is text' do
       let(:request_format) { :text }
@@ -41,8 +67,7 @@ RSpec.describe Devices::Pollution::MeasurementsController, type: :controller do
       let(:request_format) { :text }
       let(:params) do
         {
-          device_uuid: device.uuid, lat: lat, lng: lng,
-          fields: %w[airly_caqi pm25% pm10%]
+          device_uuid: device.uuid, fields: %w[airly_caqi pm25% pm10%]
         }
       end
 
@@ -92,8 +117,7 @@ RSpec.describe Devices::Pollution::MeasurementsController, type: :controller do
       let(:request_format) { :json }
       let(:params) do
         {
-          device_uuid: device.uuid, lat: lat, lng: lng,
-          fields: %w[airly_caqi pm25 pm10 pm25% pm10%]
+          device_uuid: device.uuid, fields: %w[airly_caqi pm25 pm10 pm25% pm10%]
         }
       end
 
