@@ -6,6 +6,9 @@ on:
 jobs:
   ci-rake:
     uses: ./.github/workflows/ci-rake.yml
+    env:
+      RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
