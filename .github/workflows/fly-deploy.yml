@@ -6,6 +6,8 @@ on:
 env:
   FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
+  ci-rake:
+    uses: ./.github/workflows/ci-rake.yml
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
