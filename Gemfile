@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.2'
+ruby '2.6.9'
 
 gem 'pg'
 gem 'puma', '~> 4.3'
@@ -18,6 +18,9 @@ gem 'pundit'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rubocop', require: false
 gem 'rubocop-rspec', require: false
+
+gem 'mimemagic', github: 'mimemagicrb/mimemagic',
+                 ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
 
 group :test do
   gem 'database_cleaner'

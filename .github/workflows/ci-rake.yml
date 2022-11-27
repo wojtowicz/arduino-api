@@ -1,0 +1,40 @@
+name: Ruby CI rake
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+
+jobs:
+  ci-rake:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12.1-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - run: cp config/database.yml.workflows config/database.yml
+      - run: bundle exec rake db:setup
+      - run: bundle exec rake db:test:prepare
+      - name: Run tests
+        run: bundle exec rake

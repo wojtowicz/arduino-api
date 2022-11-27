@@ -10,6 +10,7 @@ default: &default
 development:
   <<: *default
   database: database_dev
+
 test:
   <<: *default
-  database: database_dev
+  database: database_test
