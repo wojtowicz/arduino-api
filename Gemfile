@@ -8,7 +8,7 @@ ruby '2.6.9'
 gem 'pg'
 gem 'puma', '~> 4.3'
 gem 'rack-cors'
-gem 'rails', '~> 6.0.2'
+gem 'rails', '~> 6.1.7'
 gem 'responders'
 
 gem 'httparty'
