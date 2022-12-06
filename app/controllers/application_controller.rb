@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   skip_before_action :verify_authenticity_token
-  include Pundit
+  include Pundit::Authorization
   after_action :delete_headers, if: :format_text?
 
   # TODO: Remove this line when add devise gem
