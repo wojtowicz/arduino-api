@@ -205,7 +205,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-rspec (1.37.1)
       rubocop (>= 0.68.1)
-    ruby-progressbar (1.10.1)
+    ruby-progressbar (1.11.0)
     safe_yaml (1.0.5)
     simplecov (0.18.3)
       docile (~> 1.1)
